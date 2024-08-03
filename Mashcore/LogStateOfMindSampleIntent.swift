@@ -151,12 +151,23 @@ enum StateOfMind {
     }
 }
 
-enum LogStateOfMindError: Error, CustomStringConvertible {
+enum LogStateOfMindError: Error, CustomLocalizedStringResourceConvertible {
     case unknown
+    case unavailable
+    case unauthorized(HKAuthorizationStatus)
 
-    var description: String {
+    var localizedStringResource: LocalizedStringResource {
         switch self {
         case .unknown: "Something went wrong"
+        case .unavailable: "State of Mind data is not available on this device."
+        case let .unauthorized(status):
+            switch status {
+            case .notDetermined: "Please open Mashcore to authorize it to write State of Mind data to the Health app."
+            case .sharingDenied: """
+                Please go to Settings → Privacy & Security → Health → Mashcore to authorize Mashcore to write State of Mind data to the Health app.
+                """
+            default: "Something went wrong"
+            }
         }
     }
 }
@@ -165,8 +176,6 @@ struct LogStateOfMindSampleIntent: AppIntent {
     static var title: LocalizedStringResource = "Log State of Mind"
     static var description: IntentDescription =
         "Adds a State of Mind sample into the Health app. You can log a momentary emotion or a daily mood."
-
-    static var authenticationPolicy: IntentAuthenticationPolicy = .requiresAuthentication
 
     @Parameter(
         description: """
@@ -253,7 +262,18 @@ struct LogStateOfMindSampleIntent: AppIntent {
             associations: associations
         )
 
-        try await healthStore.save(sample)
+        let status = healthStore.authorizationStatus(for: HKSampleType.stateOfMindType())
+        if healthStore.isHealthDataAvailable() {
+            throw LogStateOfMindError.unavailable
+        } else if status != .sharingAuthorized {
+            throw LogStateOfMindError.unauthorized(status)
+        }
+
+        do {
+            try await healthStore.save(sample)
+        } catch {
+            throw LogStateOfMindError.unknown
+        }
 
         return .result()
     }
