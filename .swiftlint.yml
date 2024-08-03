@@ -1,0 +1,8 @@
+disabled_rules:
+    - trailing_comma
+
+opt_in_rules:
+    - file_header
+
+file_header:
+    forbidden_pattern: "^//[^/]|/\\*[^*]"
