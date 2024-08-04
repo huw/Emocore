@@ -1,156 +1,6 @@
 import AppIntents
 import HealthKit
 
-enum StateOfMind {
-    enum Kind: Int, AppEnum {
-        case momentaryEmotion = 1
-        case dailyMood = 2
-
-        public static var typeDisplayRepresentation: TypeDisplayRepresentation = .init(name: "Kind")
-
-        public static var caseDisplayRepresentations: [Kind: DisplayRepresentation] = [
-            .momentaryEmotion: .init(
-                title: "Emotion",
-                subtitle: "How you feel right now",
-                image: .init(systemName: "clock")
-            ),
-            .dailyMood: .init(
-                title: "Mood",
-                subtitle: "How you've felt overall today",
-                image: .init(systemName: "sun.horizon.fill")
-            ),
-        ]
-    }
-
-    enum Label: Int, AppEnum {
-        case amazed = 1
-        case amused = 2
-        case angry = 3
-        case annoyed = 32
-        case anxious = 4
-        case ashamed = 5
-        case brave = 6
-        case calm = 7
-        case confident = 33
-        case content = 8
-        case disappointed = 9
-        case discouraged = 10
-        case disgusted = 11
-        case drained = 34
-        case embarrassed = 12
-        case excited = 13
-        case frustrated = 14
-        case grateful = 15
-        case guilty = 16
-        case happy = 17
-        case hopeful = 35
-        case hopeless = 18
-        case indifferent = 36
-        case irritated = 19
-        case jealous = 20
-        case joyful = 21
-        case lonely = 22
-        case overwhelmed = 37
-        case passionate = 23
-        case peaceful = 24
-        case proud = 25
-        case relieved = 26
-        case sad = 27
-        case satisfied = 38
-        case scared = 28
-        case stressed = 29
-        case surprised = 30
-        case worried = 31
-
-        public static var typeDisplayRepresentation: TypeDisplayRepresentation = .init(name: "Label")
-
-        public static var caseDisplayRepresentations: [Label: DisplayRepresentation] = [
-            .amazed: "Amazed",
-            .amused: "Amused",
-            .angry: "Angry",
-            .annoyed: "Annoyed",
-            .anxious: "Anxious",
-            .ashamed: "Ashamed",
-            .brave: "Brave",
-            .calm: "Calm",
-            .confident: "Confident",
-            .content: "Content",
-            .disappointed: "Disappointed",
-            .discouraged: "Discouraged",
-            .disgusted: "Disgusted",
-            .drained: "Drained",
-            .embarrassed: "Embarrassed",
-            .excited: "Excited",
-            .frustrated: "Frustrated",
-            .grateful: "Grateful",
-            .guilty: "Guilty",
-            .happy: "Happy",
-            .hopeful: "Hopeful",
-            .hopeless: "Hopeless",
-            .indifferent: "Indifferent",
-            .irritated: "Irritated",
-            .jealous: "Jealous",
-            .joyful: "Joyful",
-            .lonely: "Lonely",
-            .overwhelmed: "Overwhelmed",
-            .passionate: "Passionate",
-            .peaceful: "Peaceful",
-            .proud: "Proud",
-            .relieved: "Relieved",
-            .sad: "Sad",
-            .satisfied: "Satisfied",
-            .scared: "Scared",
-            .stressed: "Stressed",
-            .surprised: "Surprised",
-            .worried: "Worried",
-        ]
-    }
-
-    enum Association: Int, AppEnum {
-        case community = 1
-        case currentEvents = 2
-        case dating = 3
-        case education = 4
-        case family = 5
-        case fitness = 6
-        case friends = 7
-        case health = 8
-        case hobbies = 9
-        case identity = 10
-        case money = 11
-        case partner = 12
-        case selfCare = 13
-        case spirituality = 14
-        case tasks = 15
-        case travel = 16
-        case work = 17
-        case weather = 18
-
-        public static var typeDisplayRepresentation: TypeDisplayRepresentation = .init(name: "Association")
-
-        public static var caseDisplayRepresentations: [Association: DisplayRepresentation] = [
-            .community: "Community",
-            .currentEvents: "Current Events",
-            .dating: "Dating",
-            .education: "Education",
-            .family: "Family",
-            .fitness: "Fitness",
-            .friends: "Friends",
-            .health: "Health",
-            .hobbies: "Hobbies",
-            .identity: "Identity",
-            .money: "Money",
-            .partner: "Partner",
-            .selfCare: "Self-Care",
-            .spirituality: "Spirituality",
-            .tasks: "Tasks",
-            .travel: "Travel",
-            .work: "Work",
-            .weather: "Weather",
-        ]
-    }
-}
-
 enum LogStateOfMindError: Error, CustomLocalizedStringResourceConvertible {
     case unknown
     case unavailable
@@ -164,7 +14,8 @@ enum LogStateOfMindError: Error, CustomLocalizedStringResourceConvertible {
             switch status {
             case .notDetermined: "Please open Mashcore to authorize it to write State of Mind data to the Health app."
             case .sharingDenied: """
-                Please go to Settings → Privacy & Security → Health → Mashcore to authorize Mashcore to write State of Mind data to the Health app.
+                Please go to Settings → Privacy & Security → Health → Mashcore \
+                to authorize Mashcore to write State of Mind data to the Health app.
                 """
             default: "Something went wrong"
             }
@@ -227,7 +78,7 @@ struct LogStateOfMindSampleIntent: AppIntent {
         }
     }
 
-    func perform() async throws -> some IntentResult {
+    func perform() async throws -> some ReturnsValue<StateOfMind> {
         // Convert the enums, which should work unless the HealthKit coding changes.
         guard let kind = HKStateOfMind.Kind(rawValue: kind.rawValue) else {
             throw LogStateOfMindError.unknown
@@ -263,7 +114,7 @@ struct LogStateOfMindSampleIntent: AppIntent {
         )
 
         let status = healthStore.authorizationStatus(for: HKSampleType.stateOfMindType())
-        if healthStore.isHealthDataAvailable() {
+        if !HKHealthStore.isHealthDataAvailable() {
             throw LogStateOfMindError.unavailable
         } else if status != .sharingAuthorized {
             throw LogStateOfMindError.unauthorized(status)
@@ -271,10 +122,9 @@ struct LogStateOfMindSampleIntent: AppIntent {
 
         do {
             try await healthStore.save(sample)
+            return try .result(value: sample.toVendoredStateOfMind())
         } catch {
             throw LogStateOfMindError.unknown
         }
-
-        return .result()
     }
 }

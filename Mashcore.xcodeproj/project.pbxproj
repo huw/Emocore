@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		DD27B7F02C56017800D66AA8 /* LogStateOfMindSampleIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD27B7EF2C56017800D66AA8 /* LogStateOfMindSampleIntent.swift */; };
 		DD3DBD072C57312A00ECB3EE /* healthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3DBD062C57312600ECB3EE /* healthStore.swift */; };
+		DD6CA5732C5F120700435FA2 /* StateOfMind.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CA5722C5F120700435FA2 /* StateOfMind.swift */; };
+		DD6CA5772C5F123900435FA2 /* HKStateOfMindExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CA5762C5F123900435FA2 /* HKStateOfMindExtension.swift */; };
 		DDC0BBE92C53726F0050888D /* MashcoreApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC0BBE82C53726F0050888D /* MashcoreApp.swift */; };
 		DDC0BBEB2C53726F0050888D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC0BBEA2C53726F0050888D /* ContentView.swift */; };
 		DDC0BBED2C5372710050888D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDC0BBEC2C5372710050888D /* Assets.xcassets */; };
@@ -21,6 +23,8 @@
 		DD01E3B62C5383B400E874B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Mashcore/Info.plist; sourceTree = "<group>"; };
 		DD27B7EF2C56017800D66AA8 /* LogStateOfMindSampleIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogStateOfMindSampleIntent.swift; sourceTree = "<group>"; };
 		DD3DBD062C57312600ECB3EE /* healthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = healthStore.swift; sourceTree = "<group>"; };
+		DD6CA5722C5F120700435FA2 /* StateOfMind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateOfMind.swift; sourceTree = "<group>"; };
+		DD6CA5762C5F123900435FA2 /* HKStateOfMindExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKStateOfMindExtension.swift; sourceTree = "<group>"; };
 		DDC0BBE52C53726F0050888D /* Mashcore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mashcore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDC0BBE82C53726F0050888D /* MashcoreApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MashcoreApp.swift; sourceTree = "<group>"; };
 		DDC0BBEA2C53726F0050888D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -61,6 +65,8 @@
 		DDC0BBE72C53726F0050888D /* mashcore */ = {
 			isa = PBXGroup;
 			children = (
+				DD6CA5762C5F123900435FA2 /* HKStateOfMindExtension.swift */,
+				DD6CA5722C5F120700435FA2 /* StateOfMind.swift */,
 				DD3DBD062C57312600ECB3EE /* healthStore.swift */,
 				DDC0BBE82C53726F0050888D /* MashcoreApp.swift */,
 				DD27B7EF2C56017800D66AA8 /* LogStateOfMindSampleIntent.swift */,
@@ -155,7 +161,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD6CA5732C5F120700435FA2 /* StateOfMind.swift in Sources */,
 				DD27B7F02C56017800D66AA8 /* LogStateOfMindSampleIntent.swift in Sources */,
+				DD6CA5772C5F123900435FA2 /* HKStateOfMindExtension.swift in Sources */,
 				DDC0BBEB2C53726F0050888D /* ContentView.swift in Sources */,
 				DDC0BBE92C53726F0050888D /* MashcoreApp.swift in Sources */,
 				DD3DBD072C57312A00ECB3EE /* healthStore.swift in Sources */,
