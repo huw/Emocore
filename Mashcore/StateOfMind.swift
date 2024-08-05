@@ -28,6 +28,15 @@ struct StateOfMind: AppEntity {
     @Property(title: "Associations")
     var associations: [Association]
 
+    var kindDescription: String {
+        switch kind {
+        case .momentaryEmotion: "Moment"
+        case .dailyMood: "Day"
+        @unknown default:
+            fatalError("Unknown kind: \(kind)")
+        }
+    }
+
     var valenceClassificationDescription: String {
         switch valenceClassification {
         case .neutral: "Neutral"
@@ -39,15 +48,6 @@ struct StateOfMind: AppEntity {
         case .veryUnpleasant: "Very Unpleasant"
         @unknown default:
             fatalError("Unknown valence classification: \(valenceClassification)")
-        }
-    }
-
-    var kindDescription: String {
-        switch kind {
-        case .momentaryEmotion: "Moment"
-        case .dailyMood: "Day"
-        @unknown default:
-            fatalError("Unknown kind: \(kind)")
         }
     }
 
@@ -72,7 +72,7 @@ struct StateOfMind: AppEntity {
 
         public static var typeDisplayRepresentation: TypeDisplayRepresentation = .init(name: "Kind")
 
-        public static var caseDisplayRepresentations: [Kind: DisplayRepresentation] = [
+        public static var caseDisplayRepresentations: [Self: DisplayRepresentation] = [
             .momentaryEmotion: .init(
                 title: "Emotion",
                 subtitle: "How you feel right now",
@@ -136,7 +136,7 @@ struct StateOfMind: AppEntity {
 
         public static var typeDisplayRepresentation: TypeDisplayRepresentation = .init(name: "Label")
 
-        public static var caseDisplayRepresentations: [Label: DisplayRepresentation] = [
+        public static var caseDisplayRepresentations: [Self: DisplayRepresentation] = [
             .amazed: "Amazed",
             .amused: "Amused",
             .angry: "Angry",
@@ -208,7 +208,7 @@ struct StateOfMind: AppEntity {
 
         public static var typeDisplayRepresentation: TypeDisplayRepresentation = .init(name: "Association")
 
-        public static var caseDisplayRepresentations: [Association: DisplayRepresentation] = [
+        public static var caseDisplayRepresentations: [Self: DisplayRepresentation] = [
             .community: "Community",
             .currentEvents: "Current Events",
             .dating: "Dating",
@@ -249,7 +249,7 @@ struct StateOfMind: AppEntity {
 
         public static var typeDisplayRepresentation: TypeDisplayRepresentation = .init(name: "Valence Classification")
 
-        public static var caseDisplayRepresentations: [ValenceClassification: DisplayRepresentation] = [
+        public static var caseDisplayRepresentations: [Self: DisplayRepresentation] = [
             .veryUnpleasant: "Very Unpleasant",
             .unpleasant: "Unpleasant",
             .slightlyUnpleasant: "Slightly Unpleasant",

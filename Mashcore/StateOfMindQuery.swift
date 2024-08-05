@@ -3,10 +3,7 @@ import HealthKit
 
 struct StateOfMindQuery: EntityPropertyQuery {
     static var sortingOptions = SortingOptions {
-        // TODO: Sorting
-//        SortableBy(\.$date)
-//        SortableBy(\.$kind)
-//        SortableBy(\.$valence)
+        SortableBy(\.$date)
     }
 
     static var properties = QueryProperties {
@@ -57,9 +54,6 @@ struct StateOfMindQuery: EntityPropertyQuery {
                 ])
             }
         }
-        // TODO: Comparators for these
-//        Property(\.$labels) {}
-//        Property(\.$associations) {}
     }
 
     func entities(for identifiers: [UUID]) async throws -> [StateOfMind] {
@@ -76,14 +70,20 @@ struct StateOfMindQuery: EntityPropertyQuery {
     func entities(
         matching comparators: [NSPredicate],
         mode: ComparatorMode,
-        sortedBy _: [EntityQuerySort<StateOfMind>],
+        sortedBy: [EntityQuerySort<StateOfMind>],
         limit: Int?
     ) async throws -> [StateOfMind] {
         let predicate = NSCompoundPredicate(type: mode == .and ? .and : .or, subpredicates: comparators)
+        let sortDescriptors = sortedBy.compactMap {
+            $0.by == \.$date ? SortDescriptor(
+                \HKStateOfMind.startDate,
+                order: $0.order == .ascending ? .forward : .reverse
+            ) : nil
+        }
 
         let descriptor = HKSampleQueryDescriptor(
             predicates: [.stateOfMind(predicate)],
-            sortDescriptors: [],
+            sortDescriptors: sortDescriptors,
             limit: limit
         )
 
