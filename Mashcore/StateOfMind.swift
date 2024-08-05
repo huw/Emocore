@@ -10,22 +10,22 @@ struct StateOfMind: AppEntity {
 
     var id: UUID
 
-    @Property(title: "Date")
+    @Property()
     var date: Date
 
-    @Property(title: "Kind")
+    @Property()
     var kind: Kind
 
-    @Property(title: "Valence")
+    @Property()
     var valence: Double
 
-    @Property(title: "Valence Classification")
+    @Property()
     var valenceClassification: ValenceClassification
 
-    @Property(title: "Labels")
+    @Property()
     var labels: [Label]
 
-    @Property(title: "Associations")
+    @Property()
     var associations: [Association]
 
     var kindDescription: String {
