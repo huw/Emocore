@@ -55,9 +55,10 @@ struct StateOfMind: AppEntity {
         "A \(valenceClassificationDescription) \(kindDescription)"
     }
 
-    static var typeDisplayRepresentation: TypeDisplayRepresentation = .init(
-        name: "State of Mind Sample",
-        numericFormat: "\(placeholder: .int) State of Mind samples"
+    static var typeDisplayRepresentation = TypeDisplayRepresentation(
+        name: "State of Mind Samples",
+        numericFormat: "\(placeholder: .int) State of Mind samples",
+        synonyms: ["Mood", "Emotion"]
     )
 
     var displayRepresentation: DisplayRepresentation {
