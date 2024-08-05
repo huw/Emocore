@@ -1,5 +1,6 @@
 disabled_rules:
     - trailing_comma
+    - nesting
 
 opt_in_rules:
     - file_header

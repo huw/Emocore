@@ -1,28 +1,6 @@
 import AppIntents
 import HealthKit
 
-enum LogStateOfMindError: Error, CustomLocalizedStringResourceConvertible {
-    case unknown
-    case unavailable
-    case unauthorized(HKAuthorizationStatus)
-
-    var localizedStringResource: LocalizedStringResource {
-        switch self {
-        case .unknown: "Something went wrong"
-        case .unavailable: "State of Mind data is not available on this device."
-        case let .unauthorized(status):
-            switch status {
-            case .notDetermined: "Please open Mashcore to authorize it to write State of Mind data to the Health app."
-            case .sharingDenied: """
-                Please go to Settings → Privacy & Security → Health → Mashcore \
-                to authorize Mashcore to write State of Mind data to the Health app.
-                """
-            default: "Something went wrong"
-            }
-        }
-    }
-}
-
 struct LogStateOfMindSampleIntent: AppIntent {
     static var title: LocalizedStringResource = "Log State of Mind"
     static var description: IntentDescription =
@@ -80,19 +58,21 @@ struct LogStateOfMindSampleIntent: AppIntent {
 
     func perform() async throws -> some ReturnsValue<StateOfMind> {
         // Convert the enums, which should work unless the HealthKit coding changes.
-        guard let kind = HKStateOfMind.Kind(rawValue: kind.rawValue) else {
-            throw LogStateOfMindError.unknown
+        guard let kind = kind.toHKStateOfMindKind else {
+            throw Error.unknown
         }
 
         // For the lists, start by filtering out anything that doesn't convert, then throw if anything got filtered
-        let labels = (labels ?? []).compactMap { HKStateOfMind.Label(rawValue: $0.rawValue) }
+        let labels = (labels ?? []).compactMap { $0.toHKStateOfMindLabel }
         guard labels.count == (self.labels?.count ?? 0) else {
-            throw LogStateOfMindError.unknown
+            throw Error.unknown
         }
 
-        let associations = (associations ?? []).compactMap { HKStateOfMind.Association(rawValue: $0.rawValue) }
+        let associations = (associations ?? []).compactMap {
+            $0.toHKStateOfMindAssociation
+        }
         guard associations.count == (self.associations?.count ?? 0) else {
-            throw LogStateOfMindError.unknown
+            throw Error.unknown
         }
 
         var date = date ?? Date.now
@@ -101,7 +81,7 @@ struct LogStateOfMindSampleIntent: AppIntent {
             if let dailyDate = Calendar.current.date(bySettingHour: 22, minute: 0, second: 0, of: date) {
                 date = dailyDate
             } else {
-                throw LogStateOfMindError.unknown
+                throw Error.unknown
             }
         }
 
@@ -115,16 +95,40 @@ struct LogStateOfMindSampleIntent: AppIntent {
 
         let status = healthStore.authorizationStatus(for: HKSampleType.stateOfMindType())
         if !HKHealthStore.isHealthDataAvailable() {
-            throw LogStateOfMindError.unavailable
+            throw Error.unavailable
         } else if status != .sharingAuthorized {
-            throw LogStateOfMindError.unauthorized(status)
+            throw Error.unauthorized(status)
         }
 
         do {
             try await healthStore.save(sample)
             return try .result(value: sample.toVendoredStateOfMind())
         } catch {
-            throw LogStateOfMindError.unknown
+            throw Error.unknown
+        }
+    }
+
+    enum Error: Swift.Error, CustomLocalizedStringResourceConvertible {
+        case unknown
+        case unavailable
+        case unauthorized(HKAuthorizationStatus)
+
+        var localizedStringResource: LocalizedStringResource {
+            switch self {
+            case .unknown: "Something went wrong"
+            case .unavailable: "State of Mind data is not available on this device."
+            case let .unauthorized(status):
+                switch status {
+                case .notDetermined: """
+                    Please open Mashcore to authorize it to write State of Mind data to the Health app.
+                    """
+                case .sharingDenied: """
+                    Please go to Settings → Privacy & Security → Health → Mashcore \
+                    to authorize Mashcore to write State of Mind data to the Health app.
+                    """
+                default: "Something went wrong"
+                }
+            }
         }
     }
 }

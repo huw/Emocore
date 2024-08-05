@@ -1,7 +1,9 @@
 import AppIntents
 import HealthKit
 
-struct StateOfMind: TransientAppEntity {
+struct StateOfMind: AppEntity {
+    static var defaultQuery = StateOfMindQuery()
+
     init() {
         id = UUID()
     }
@@ -82,6 +84,14 @@ struct StateOfMind: TransientAppEntity {
                 image: .init(systemName: "sun.horizon.fill")
             ),
         ]
+
+        init?(from: HKStateOfMind.Kind) {
+            self.init(rawValue: from.rawValue)
+        }
+
+        var toHKStateOfMindKind: HKStateOfMind.Kind? {
+            HKStateOfMind.Kind(rawValue: rawValue)
+        }
     }
 
     enum Label: Int, AppEnum {
@@ -166,6 +176,14 @@ struct StateOfMind: TransientAppEntity {
             .surprised: "Surprised",
             .worried: "Worried",
         ]
+
+        init?(from: HKStateOfMind.Label) {
+            self.init(rawValue: from.rawValue)
+        }
+
+        var toHKStateOfMindLabel: HKStateOfMind.Label? {
+            HKStateOfMind.Label(rawValue: rawValue)
+        }
     }
 
     enum Association: Int, AppEnum {
@@ -210,6 +228,14 @@ struct StateOfMind: TransientAppEntity {
             .work: "Work",
             .weather: "Weather",
         ]
+
+        init?(from: HKStateOfMind.Association) {
+            self.init(rawValue: from.rawValue)
+        }
+
+        var toHKStateOfMindAssociation: HKStateOfMind.Association? {
+            HKStateOfMind.Association(rawValue: rawValue)
+        }
     }
 
     enum ValenceClassification: Int, AppEnum {
@@ -232,5 +258,13 @@ struct StateOfMind: TransientAppEntity {
             .pleasant: "Pleasant",
             .veryPleasant: "Very Pleasant",
         ]
+
+        init?(from: HKStateOfMind.ValenceClassification) {
+            self.init(rawValue: from.rawValue)
+        }
+
+        var toHKStateOfMindValenceClassification: HKStateOfMind.ValenceClassification? {
+            HKStateOfMind.ValenceClassification(rawValue: rawValue)
+        }
     }
 }

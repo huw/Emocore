@@ -6,23 +6,21 @@ enum StateOfMindConversionError: Error {
 
 extension HKStateOfMind {
     func toVendoredStateOfMind() throws -> StateOfMind {
-        guard let kind = StateOfMind.Kind(rawValue: kind.rawValue) else {
+        guard let kind = StateOfMind.Kind(from: kind) else {
             throw StateOfMindConversionError.unknown
         }
 
-        guard let valenceClassification = StateOfMind.ValenceClassification(
-            rawValue: valenceClassification.rawValue
-        ) else {
+        guard let valenceClassification = StateOfMind.ValenceClassification(from: valenceClassification) else {
             throw StateOfMindConversionError.unknown
         }
 
         // For the lists, start by filtering out anything that doesn't convert, then throw if anything got filtered
-        let labels = labels.compactMap { StateOfMind.Label(rawValue: $0.rawValue) }
+        let labels = labels.compactMap { StateOfMind.Label(from: $0) }
         guard labels.count == self.labels.count else {
             throw StateOfMindConversionError.unknown
         }
 
-        let associations = associations.compactMap { StateOfMind.Association(rawValue: $0.rawValue) }
+        let associations = associations.compactMap { StateOfMind.Association(from: $0) }
         guard associations.count == self.associations.count else {
             throw StateOfMindConversionError.unknown
         }
