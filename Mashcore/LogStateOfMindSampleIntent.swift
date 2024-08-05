@@ -3,8 +3,12 @@ import HealthKit
 
 struct LogStateOfMindSampleIntent: AppIntent {
     static var title: LocalizedStringResource = "Log State of Mind"
-    static var description: IntentDescription =
-        "Adds a State of Mind sample into the Health app. You can log a momentary emotion or a daily mood."
+    static var description = IntentDescription(
+        "Adds a State of Mind sample into the Health app. You can log a momentary emotion or a daily mood.",
+        categoryName: "State of Mind",
+        searchKeywords: ["mood", "emotion", "momentary", "daily"],
+        resultValueName: "State of Mind"
+    )
 
     @Parameter(
         description: """
@@ -17,7 +21,7 @@ struct LogStateOfMindSampleIntent: AppIntent {
 
     @Parameter(
         description: """
-        "The date and time of the data point. \
+        The date and time of the data point. \
         When logging a daily mood, the time component will be ignored. \
         The current date will be used if you don't provide a date.
         """,

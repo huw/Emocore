@@ -2,6 +2,14 @@ import AppIntents
 import HealthKit
 
 struct StateOfMindQuery: EntityPropertyQuery {
+    static var findIntentDescription =
+        IntentDescription(
+            "Searches for the State of Mind samples in your library that match the given criteria.",
+            categoryName: "State of Mind",
+            searchKeywords: ["mood", "emotion", "momentary", "daily"],
+            resultValueName: "State of Mind Samples"
+        )
+
     static var sortingOptions = SortingOptions {
         SortableBy(\.$date)
     }
