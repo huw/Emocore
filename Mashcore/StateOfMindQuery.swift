@@ -43,11 +43,17 @@ struct StateOfMindQuery: EntityPropertyQuery {
         }
         Property(\.$valenceClassification) {
             // Allow users to select by valence classification by building our own compound components
-            // Cutoff values were determined through trial and error, they exist at roughly sevenths
+            // Shortcuts won't display less-than comparators for this type, unfortunately
             EqualToComparator {
                 NSCompoundPredicate(andPredicateWithSubpredicates: [
                     HKQuery.predicateForStatesOfMind(withValence: $0.bounds.lower, operatorType: .greaterThanOrEqualTo),
                     HKQuery.predicateForStatesOfMind(withValence: $0.bounds.upper, operatorType: .lessThan),
+                ])
+            }
+            NotEqualToComparator {
+                NSCompoundPredicate(orPredicateWithSubpredicates: [
+                    HKQuery.predicateForStatesOfMind(withValence: $0.bounds.lower, operatorType: .lessThan),
+                    HKQuery.predicateForStatesOfMind(withValence: $0.bounds.upper, operatorType: .greaterThanOrEqualTo),
                 ])
             }
         }
