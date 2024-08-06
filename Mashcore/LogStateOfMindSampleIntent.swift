@@ -81,8 +81,14 @@ struct LogStateOfMindSampleIntent: AppIntent {
 
         var date = date ?? Date.now
         if kind == .dailyMood {
+            // If the daily mood isn't logged today, then set it to 10pm (this is what the Health app does)
             // Throw if, for some reason, this conversion doesn't work
-            if let dailyDate = Calendar.current.date(bySettingHour: 22, minute: 0, second: 0, of: date) {
+            if !Calendar.current.isDateInToday(date) && let dailyDate = Calendar.current.date(
+                bySettingHour: 22,
+                minute: 0,
+                second: 0,
+                of: date
+            ) {
                 date = dailyDate
             } else {
                 throw Error.unknown
