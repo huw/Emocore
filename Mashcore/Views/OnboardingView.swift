@@ -40,7 +40,9 @@ struct OnboardingView: View {
                 OnboardingRow(
                     imageName: "hand.raised.fill",
                     title: "Everything On Device",
-                    subtitle: "All your data remains on your device. \(Bundle.main.displayName) is open source and auditable."
+                    subtitle: """
+                    All your data remains on your device. \(Bundle.main.displayName) is open source and auditable.
+                    """
                 )
             }
             Button {

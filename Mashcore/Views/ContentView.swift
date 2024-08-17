@@ -51,5 +51,15 @@ struct ContentView: View {
 }
 
 #Preview {
+    let defaults: UserDefaults = {
+        let defaults = UserDefaults(suiteName: "PreviewUserDefaults")!
+        defaults.set(true, forKey: "hasPresentedOnboarding")
+        return defaults
+    }()
+
+    ContentView().defaultAppStorage(defaults)
+}
+
+#Preview {
     ContentView()
 }
