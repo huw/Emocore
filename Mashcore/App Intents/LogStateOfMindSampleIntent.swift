@@ -130,11 +130,12 @@ struct LogStateOfMindSampleIntent: AppIntent {
             case let .unauthorized(status):
                 switch status {
                 case .notDetermined: """
-                    Please open Mashcore to authorize it to write State of Mind data to the Health app.
+                    Please open \(Bundle.main
+                        .displayName) to authorize it to write State of Mind data to the Health app.
                     """
                 case .sharingDenied: """
-                    Please go to Settings → Privacy & Security → Health → Mashcore \
-                    to authorize Mashcore to write State of Mind data to the Health app.
+                    Please go to Settings → Privacy & Security → Health → \(Bundle.main.displayName) \
+                    to authorize \(Bundle.main.displayName) to write State of Mind data to the Health app.
                     """
                 default: "Something went wrong"
                 }

@@ -25,7 +25,7 @@ struct OnboardingView: View {
 
     var body: some View {
         VStack(spacing: 64) {
-            Text("Mashcore")
+            Text(Bundle.main.displayName)
                 .font(.largeTitle)
                 .bold()
                 .accessibilityHeading(.h1)
@@ -40,7 +40,7 @@ struct OnboardingView: View {
                 OnboardingRow(
                     imageName: "hand.raised.fill",
                     title: "Everything On Device",
-                    subtitle: "All your data remains on your device. Mashcore is open source and auditable."
+                    subtitle: "All your data remains on your device. \(Bundle.main.displayName) is open source and auditable."
                 )
             }
             Button {
