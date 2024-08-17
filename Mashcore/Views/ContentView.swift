@@ -9,10 +9,59 @@ struct ContentView: View {
     @State private var isOnboardingPresented = false
     @State private var isHealthAccessPresented = false
 
+    @State private var shortcutsLinkWidth: CGFloat?
+
     var body: some View {
-        VStack {
-            ShortcutsLink()
-                .disabled(!isAuthenticated)
+        NavigationStack {
+            List {
+                Section {
+                    Button("Open Shortcuts") {
+                        if let url = URL(string: "shortcuts://") {
+                            UIApplication.shared.open(url)
+                        }
+                    }
+                    Button("Create Shortcut") {
+                        if let url = URL(string: "shortcuts://create-shortcut") {
+                            UIApplication.shared.open(url)
+                        }
+                    }
+                } footer: {
+                    Text("""
+                    \(Bundle.main.displayName) provides Shortcuts for adding and retrieving \
+                    State of Mind data from HealthKit. You can configure them in the Shortcuts app.
+                    """)
+                }
+
+                Section {
+                    Button("Update Health access") {
+                        if let url = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(url)
+                        }
+                    }
+                } footer: {
+                    Text("""
+                    To update Health access, go to the Settings app → Privacy & Security → Health.
+                    """)
+                }
+
+                Section {
+                    Button("Open source code on GitHub") {
+                        if let url = URL(string: "https://github.com/huw/mashcore") {
+                            UIApplication.shared.open(url)
+                        }
+                    }
+                    Button("Contact support") {
+                        if let urlEscaped =
+                            "mailto:huw@hyperreal.technology?subject=\(Bundle.main.displayName) support request"
+                                .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let url =
+                                URL(string: urlEscaped) {
+                            UIApplication.shared.open(url)
+                        }
+                    }
+                }
+            }
+            .disabled(!isAuthenticated)
+            .navigationTitle(Bundle.main.displayName)
         }
         .fullScreenCover(
             isPresented: $isOnboardingPresented,
@@ -52,7 +101,7 @@ struct ContentView: View {
 
 #Preview {
     let defaults: UserDefaults = {
-        let defaults = UserDefaults(suiteName: "PreviewUserDefaults")!
+        let defaults = UserDefaults(suiteName: "Preview")!
         defaults.set(true, forKey: "hasPresentedOnboarding")
         return defaults
     }()

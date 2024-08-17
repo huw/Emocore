@@ -349,8 +349,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Mashcore/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app's Siri Shortcuts can read your health data";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app's Siri Shortcuts can add to or edit your health data";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "$(PRODUCT_NAME)'s Siri Shortcuts can read your State of Mind entries";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "$(PRODUCT_NAME)'s Siri Shortcuts can add new State of Mind entries";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -387,8 +387,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Mashcore/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app's Siri Shortcuts can read your health data";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app's Siri Shortcuts can add to or edit your health data";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "$(PRODUCT_NAME)'s Siri Shortcuts can read your State of Mind entries";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "$(PRODUCT_NAME)'s Siri Shortcuts can add new State of Mind entries";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
