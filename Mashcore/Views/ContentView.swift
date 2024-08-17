@@ -4,9 +4,10 @@ import HealthKitUI
 import SwiftUI
 
 struct ContentView: View {
-    @State var isAuthenticated = false
-    @State var isOnboardingPresented = false
-    @State var isHealthAccessPresented = false
+    @AppStorage("hasPresentedOnboarding") private var hasPresentedOnboarding = false
+    @State private var isAuthenticated = false
+    @State private var isOnboardingPresented = false
+    @State private var isHealthAccessPresented = false
 
     var body: some View {
         VStack {
@@ -23,7 +24,12 @@ struct ContentView: View {
         )
         .onAppear {
             if HKHealthStore.isHealthDataAvailable() {
-                isOnboardingPresented = true
+                if !hasPresentedOnboarding {
+                    isOnboardingPresented = true
+                } else {
+                    // Otherwise, just trigger the health request, which should automatically succeed
+                    isHealthAccessPresented = true
+                }
             }
         }
         .healthDataAccessRequest(
@@ -35,6 +41,7 @@ struct ContentView: View {
             switch result {
             case .success:
                 isOnboardingPresented = false
+                hasPresentedOnboarding = true
                 isAuthenticated = true
             case let .failure(error):
                 fatalError("*** An error occurred while requesting authentication: \(error) ***")

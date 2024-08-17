@@ -4,6 +4,7 @@ disabled_rules:
 
 opt_in_rules:
     - file_header
+    - private_swiftui_state
 
 file_header:
     forbidden_pattern: "^//[^/]|/\\*[^*]"
