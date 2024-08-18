@@ -25,10 +25,16 @@ struct OnboardingView: View {
 
     var body: some View {
         VStack(spacing: 64) {
-            Text(Bundle.main.displayName)
-                .font(.largeTitle)
-                .bold()
-                .accessibilityHeading(.h1)
+            VStack {
+                Text(Bundle.main.displayName)
+                    .font(.largeTitle)
+                    .bold()
+                    .accessibilityHeading(.h1)
+                Text("The missing State of Mind Shortcuts")
+                    .fontWeight(.medium)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+            }
             VStack(spacing: 32) {
                 OnboardingRow(
                     imageName: "brain.head.profile",
