@@ -46,7 +46,7 @@ struct ContentView: View {
 
                 Section {
                     Button("Open source code on GitHub") {
-                        if let url = URL(string: "https://github.com/huw/mashcore") {
+                        if let url = URL(string: "https://github.com/huw/Emocore") {
                             UIApplication.shared.open(url)
                         }
                     }

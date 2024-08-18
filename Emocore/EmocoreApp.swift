@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct MashcoreApp: App {
+struct EmocoreApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
