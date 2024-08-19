@@ -63,6 +63,7 @@ struct OnboardingView: View {
             .controlSize(.large)
         }
         .padding(.horizontal, 36)
+        .interactiveDismissDisabled()
     }
 }
 

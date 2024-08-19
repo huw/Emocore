@@ -63,7 +63,7 @@ struct ContentView: View {
             .disabled(!isAuthenticated)
             .navigationTitle(Bundle.main.displayName)
         }
-        .fullScreenCover(
+        .sheet(
             isPresented: $isOnboardingPresented,
             content: {
                 OnboardingView {
