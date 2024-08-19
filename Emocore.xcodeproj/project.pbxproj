@@ -30,6 +30,10 @@
 		DD6CA5762C5F123900435FA2 /* HKStateOfMind+toVendoredStateOfMind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HKStateOfMind+toVendoredStateOfMind.swift"; sourceTree = "<group>"; };
 		DD6CA5782C5F599C00435FA2 /* StateOfMindQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateOfMindQuery.swift; sourceTree = "<group>"; };
 		DDA8D5E82C72D96A0021F6A3 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
+		DDA8D5E92C72DAED0021F6A3 /* LICENSE */ = {isa = PBXFileReference; explicitFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		DDA8D5EA2C72DD1A0021F6A3 /* PRIVACY */ = {isa = PBXFileReference; lastKnownFileType = text; path = PRIVACY; sourceTree = "<group>"; };
+		DDA8D5EB2C72E2A40021F6A3 /* TERMS */ = {isa = PBXFileReference; lastKnownFileType = text; path = TERMS; sourceTree = "<group>"; };
+		DDA8D5EC2C72E2C80021F6A3 /* README.md */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DDC0BBE52C53726F0050888D /* Emocore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Emocore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDC0BBE82C53726F0050888D /* EmocoreApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmocoreApp.swift; sourceTree = "<group>"; };
 		DDC0BBEA2C53726F0050888D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -61,6 +65,10 @@
 		DDC0BBDC2C53726F0050888D = {
 			isa = PBXGroup;
 			children = (
+				DDA8D5EC2C72E2C80021F6A3 /* README.md */,
+				DDA8D5EB2C72E2A40021F6A3 /* TERMS */,
+				DDA8D5EA2C72DD1A0021F6A3 /* PRIVACY */,
+				DDA8D5E92C72DAED0021F6A3 /* LICENSE */,
 				DD01E3B62C5383B400E874B0 /* Info.plist */,
 				DD01E3B52C537ED400E874B0 /* Emocore.entitlements */,
 				DD01E3B22C5374A000E874B0 /* .swiftlint.yml */,
