@@ -29,6 +29,7 @@
 		DD6CA5722C5F120700435FA2 /* StateOfMind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateOfMind.swift; sourceTree = "<group>"; };
 		DD6CA5762C5F123900435FA2 /* HKStateOfMind+toVendoredStateOfMind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HKStateOfMind+toVendoredStateOfMind.swift"; sourceTree = "<group>"; };
 		DD6CA5782C5F599C00435FA2 /* StateOfMindQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateOfMindQuery.swift; sourceTree = "<group>"; };
+		DDA8D5E82C72D96A0021F6A3 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		DDC0BBE52C53726F0050888D /* Emocore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Emocore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDC0BBE82C53726F0050888D /* EmocoreApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmocoreApp.swift; sourceTree = "<group>"; };
 		DDC0BBEA2C53726F0050888D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -49,6 +50,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DDA8D5E72C72D94F0021F6A3 /* ci_scripts */ = {
+			isa = PBXGroup;
+			children = (
+				DDA8D5E82C72D96A0021F6A3 /* ci_post_clone.sh */,
+			);
+			path = ci_scripts;
+			sourceTree = "<group>";
+		};
 		DDC0BBDC2C53726F0050888D = {
 			isa = PBXGroup;
 			children = (
@@ -56,6 +65,7 @@
 				DD01E3B52C537ED400E874B0 /* Emocore.entitlements */,
 				DD01E3B22C5374A000E874B0 /* .swiftlint.yml */,
 				DDC0BBE72C53726F0050888D /* Emocore */,
+				DDA8D5E72C72D94F0021F6A3 /* ci_scripts */,
 				DDC0BBE62C53726F0050888D /* Products */,
 			);
 			sourceTree = "<group>";

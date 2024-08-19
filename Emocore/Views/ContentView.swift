@@ -52,7 +52,7 @@ struct ContentView: View {
                     }
                     Button("Contact support") {
                         if let urlEscaped =
-                            "mailto:huw@hyperreal.technology?subject=\(Bundle.main.displayName) support request"
+                            "mailto:yo@huw.cool?subject=\(Bundle.main.displayName) support request"
                                 .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let url =
                                 URL(string: urlEscaped) {
                             UIApplication.shared.open(url)
