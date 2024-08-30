@@ -28,6 +28,8 @@ struct StateOfMind: AppEntity {
     @Property()
     var associations: [Association]
 
+    var healthKitStateOfMind: HKStateOfMind?
+
     var kindDescription: String {
         switch kind {
         case .momentaryEmotion: "Moment"

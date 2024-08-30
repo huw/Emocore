@@ -33,6 +33,7 @@ extension HKStateOfMind {
         sample.valenceClassification = valenceClassification
         sample.labels = labels
         sample.associations = associations
+        sample.healthKitStateOfMind = self
 
         return sample
     }

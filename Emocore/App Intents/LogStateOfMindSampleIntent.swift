@@ -2,6 +2,8 @@ import AppIntents
 import HealthKit
 
 struct LogStateOfMindSampleIntent: AppIntent {
+    typealias Error = StateOfMindIntentError
+
     static var title: LocalizedStringResource = "Log State of Mind"
     static var description = IntentDescription(
         "Adds a State of Mind sample into the Health app. You can log a momentary emotion or a daily mood.",
@@ -63,35 +65,37 @@ struct LogStateOfMindSampleIntent: AppIntent {
     func perform() async throws -> some ReturnsValue<StateOfMind> {
         // Convert the enums, which should work unless the HealthKit coding changes.
         guard let kind = kind.toHKStateOfMindKind else {
-            throw Error.unknown
+            throw Error.unknown("Couldn't convert intent kind to HealthKit kind")
         }
 
         // For the lists, start by filtering out anything that doesn't convert, then throw if anything got filtered
         let labels = (labels ?? []).compactMap { $0.toHKStateOfMindLabel }
         guard labels.count == (self.labels?.count ?? 0) else {
-            throw Error.unknown
+            throw Error.unknown("Couldn't convert intent labels to HealthKit labels")
         }
 
         let associations = (associations ?? []).compactMap {
             $0.toHKStateOfMindAssociation
         }
         guard associations.count == (self.associations?.count ?? 0) else {
-            throw Error.unknown
+            throw Error.unknown("Couldn't convert intent associations to HealthKit associations")
         }
 
         var date = date ?? Date.now
         if kind == .dailyMood {
             // If the daily mood isn't logged today, then set it to 10pm (this is what the Health app does)
             // Throw if, for some reason, this conversion doesn't work
-            if !Calendar.current.isDateInToday(date), let dailyDate = Calendar.current.date(
-                bySettingHour: 22,
-                minute: 0,
-                second: 0,
-                of: date
-            ) {
-                date = dailyDate
-            } else {
-                throw Error.unknown
+            if !Calendar.current.isDateInToday(date) {
+                if let dailyDate = Calendar.current.date(
+                    bySettingHour: 22,
+                    minute: 0,
+                    second: 0,
+                    of: date
+                ) {
+                    date = dailyDate
+                } else {
+                    throw Error.unknown("Couldn't update intent date to 10:00pm for daily mood")
+                }
             }
         }
 
@@ -114,32 +118,7 @@ struct LogStateOfMindSampleIntent: AppIntent {
             try await healthStore.save(sample)
             return try .result(value: sample.toVendoredStateOfMind())
         } catch {
-            throw Error.unknown
-        }
-    }
-
-    enum Error: Swift.Error, CustomLocalizedStringResourceConvertible {
-        case unknown
-        case unavailable
-        case unauthorized(HKAuthorizationStatus)
-
-        var localizedStringResource: LocalizedStringResource {
-            switch self {
-            case .unknown: "Something went wrong"
-            case .unavailable: "State of Mind data is not available on this device."
-            case let .unauthorized(status):
-                switch status {
-                case .notDetermined: """
-                    Please open \(Bundle.main
-                        .displayName) to authorize it to write State of Mind data to the Health app.
-                    """
-                case .sharingDenied: """
-                    Please go to Settings → Privacy & Security → Health → \(Bundle.main.displayName) \
-                    to authorize \(Bundle.main.displayName) to write State of Mind data to the Health app.
-                    """
-                default: "Something went wrong"
-                }
-            }
+            throw Error.unknown(error.localizedDescription)
         }
     }
 }

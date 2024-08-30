@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DD27B7F02C56017800D66AA8 /* LogStateOfMindSampleIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD27B7EF2C56017800D66AA8 /* LogStateOfMindSampleIntent.swift */; };
+		DD3A0E042C815D4C00B8DECC /* StateOfMindIntentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3A0E032C815D4C00B8DECC /* StateOfMindIntentError.swift */; };
 		DD3DBD072C57312A00ECB3EE /* healthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3DBD062C57312600ECB3EE /* healthStore.swift */; };
 		DD6CA5732C5F120700435FA2 /* StateOfMind.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CA5722C5F120700435FA2 /* StateOfMind.swift */; };
 		DD6CA5772C5F123900435FA2 /* HKStateOfMind+toVendoredStateOfMind.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CA5762C5F123900435FA2 /* HKStateOfMind+toVendoredStateOfMind.swift */; };
@@ -25,6 +26,7 @@
 		DD01E3B52C537ED400E874B0 /* Emocore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Emocore.entitlements; sourceTree = "<group>"; };
 		DD01E3B62C5383B400E874B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD27B7EF2C56017800D66AA8 /* LogStateOfMindSampleIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogStateOfMindSampleIntent.swift; sourceTree = "<group>"; };
+		DD3A0E032C815D4C00B8DECC /* StateOfMindIntentError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateOfMindIntentError.swift; sourceTree = "<group>"; };
 		DD3DBD062C57312600ECB3EE /* healthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = healthStore.swift; sourceTree = "<group>"; };
 		DD6CA5722C5F120700435FA2 /* StateOfMind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateOfMind.swift; sourceTree = "<group>"; };
 		DD6CA5762C5F123900435FA2 /* HKStateOfMind+toVendoredStateOfMind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HKStateOfMind+toVendoredStateOfMind.swift"; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 		DDD84DBF2C61D368002AC267 /* App Intents */ = {
 			isa = PBXGroup;
 			children = (
+				DD3A0E032C815D4C00B8DECC /* StateOfMindIntentError.swift */,
 				DD6CA5782C5F599C00435FA2 /* StateOfMindQuery.swift */,
 				DD27B7EF2C56017800D66AA8 /* LogStateOfMindSampleIntent.swift */,
 			);
@@ -215,6 +218,7 @@
 				DD6CA5732C5F120700435FA2 /* StateOfMind.swift in Sources */,
 				DD27B7F02C56017800D66AA8 /* LogStateOfMindSampleIntent.swift in Sources */,
 				DD6CA5772C5F123900435FA2 /* HKStateOfMind+toVendoredStateOfMind.swift in Sources */,
+				DD3A0E042C815D4C00B8DECC /* StateOfMindIntentError.swift in Sources */,
 				DDC0BBEB2C53726F0050888D /* ContentView.swift in Sources */,
 				DDC0BBE92C53726F0050888D /* EmocoreApp.swift in Sources */,
 				DDD84DC32C61D7A9002AC267 /* OnboardingView.swift in Sources */,
