@@ -63,7 +63,7 @@ struct StateOfMind: AppEntity {
     }
 
     static var typeDisplayRepresentation = TypeDisplayRepresentation(
-        name: "State of Mind Samples",
+        name: "State of Mind Sample",
         numericFormat: "\(placeholder: .int) State of Mind samples",
         synonyms: ["Mood", "Emotion"]
     )
