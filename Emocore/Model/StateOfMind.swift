@@ -33,6 +33,9 @@ struct StateOfMind: AppEntity {
     @Property()
     var associations: [Association]
 
+    @Property()
+    var source: Source?
+
     var healthKitStateOfMind: HKStateOfMind?
 
     var kindDescription: String {
@@ -63,7 +66,7 @@ struct StateOfMind: AppEntity {
     }
 
     static var typeDisplayRepresentation = TypeDisplayRepresentation(
-        name: "State of Mind Sample",
+        name: "State of Mind Samples",
         numericFormat: "\(placeholder: .int) State of Mind samples",
         synonyms: ["Mood", "Emotion"]
     )

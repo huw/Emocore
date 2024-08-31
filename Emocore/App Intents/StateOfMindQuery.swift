@@ -4,7 +4,7 @@ import HealthKit
 struct StateOfMindQuery: EntityPropertyQuery {
     static var findIntentDescription =
         IntentDescription(
-            "Searches for the State of Mind samples in your library that match the given criteria.",
+            "Searches for the State of Mind samples in the Health app that match the given criteria.",
             categoryName: "State of Mind",
             searchKeywords: ["mood", "emotion", "momentary", "daily"],
             resultValueName: "State of Mind Samples"
@@ -60,6 +60,15 @@ struct StateOfMindQuery: EntityPropertyQuery {
                     HKQuery.predicateForStatesOfMind(withValence: $0.bounds.lower, operatorType: .lessThan),
                     HKQuery.predicateForStatesOfMind(withValence: $0.bounds.upper, operatorType: .greaterThanOrEqualTo),
                 ])
+            }
+        }
+        Property(\.$source) {
+            EqualToComparator {
+                if let source = $0?.healthKitSource {
+                    return HKQuery.predicateForObjects(from: source)
+                } else {
+                    return NSPredicate()
+                }
             }
         }
     }
