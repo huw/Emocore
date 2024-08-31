@@ -17,7 +17,7 @@ struct LogStateOfMindSampleIntent: AppIntent {
         The kind of feeling type captured by a state of mind log, \
         considering the period of time the reflection concerns.
         """,
-        requestValueDialog: "Log an Emotion or Mood"
+        requestValueDialog: "Is this a daily mood or a momentary emotion?"
     )
     var kind: StateOfMind.Kind
 
@@ -55,10 +55,32 @@ struct LogStateOfMindSampleIntent: AppIntent {
     )
     var associations: [StateOfMind.Association]?
 
+    @Parameter(
+        title: "Override past daily mood time to 10pm",
+        description: """
+        Whether to override the time of a past daily mood to 10:00pm. \
+        This is the default behaviour in the Health app, but might be unsuitable for use with Shortcuts.
+        """,
+        default: true,
+        requestValueDialog: "If this daily mood is in the past, should its time be overriden to 10pm?"
+    )
+    var shouldOverridePastDailyMoodTime: Bool
+
     static var parameterSummary: some ParameterSummary {
-        Summary("Log \(\.$kind) of valence \(\.$valence) at \(\.$date)") {
-            \.$labels
-            \.$associations
+        Switch(\.$kind) {
+            Case(StateOfMindKind.momentaryEmotion) {
+                Summary("Log \(\.$kind) of valence \(\.$valence) at \(\.$date)") {
+                    \.$labels
+                    \.$associations
+                }
+            }
+            DefaultCase {
+                Summary("Log \(\.$kind) of valence \(\.$valence) at \(\.$date)") {
+                    \.$labels
+                    \.$associations
+                    \.$shouldOverridePastDailyMoodTime
+                }
+            }
         }
     }
 
@@ -85,7 +107,7 @@ struct LogStateOfMindSampleIntent: AppIntent {
         if kind == .dailyMood {
             // If the daily mood isn't logged today, then set it to 10pm (this is what the Health app does)
             // Throw if, for some reason, this conversion doesn't work
-            if !Calendar.current.isDateInToday(date) {
+            if !Calendar.current.isDateInToday(date) && shouldOverridePastDailyMoodTime {
                 if let dailyDate = Calendar.current.date(
                     bySettingHour: 22,
                     minute: 0,

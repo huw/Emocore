@@ -18,6 +18,10 @@
 		DDC0BBEB2C53726F0050888D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC0BBEA2C53726F0050888D /* ContentView.swift */; };
 		DDC0BBED2C5372710050888D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDC0BBEC2C5372710050888D /* Assets.xcassets */; };
 		DDC0BBF02C5372710050888D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDC0BBEF2C5372710050888D /* Preview Assets.xcassets */; };
+		DDC4E5A62C832C6700D422EB /* StateOfMindKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4E5A52C832C6700D422EB /* StateOfMindKind.swift */; };
+		DDC4E5A82C832D4000D422EB /* StateOfMindLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4E5A72C832D4000D422EB /* StateOfMindLabel.swift */; };
+		DDC4E5AA2C832D5C00D422EB /* StateOfMindAssociation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4E5A92C832D5C00D422EB /* StateOfMindAssociation.swift */; };
+		DDC4E5AC2C832D6F00D422EB /* StateOfMindValenceClassification.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4E5AB2C832D6F00D422EB /* StateOfMindValenceClassification.swift */; };
 		DDD84DC32C61D7A9002AC267 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD84DC22C61D79F002AC267 /* OnboardingView.swift */; };
 		DDD9BC3A2C702E6D007DBE29 /* Bundle+displayName.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD9BC392C702E62007DBE29 /* Bundle+displayName.swift */; };
 /* End PBXBuildFile section */
@@ -43,6 +47,10 @@
 		DDC0BBEA2C53726F0050888D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DDC0BBEC2C5372710050888D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DDC0BBEF2C5372710050888D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DDC4E5A52C832C6700D422EB /* StateOfMindKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateOfMindKind.swift; sourceTree = "<group>"; };
+		DDC4E5A72C832D4000D422EB /* StateOfMindLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateOfMindLabel.swift; sourceTree = "<group>"; };
+		DDC4E5A92C832D5C00D422EB /* StateOfMindAssociation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateOfMindAssociation.swift; sourceTree = "<group>"; };
+		DDC4E5AB2C832D6F00D422EB /* StateOfMindValenceClassification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateOfMindValenceClassification.swift; sourceTree = "<group>"; };
 		DDD84DC22C61D79F002AC267 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		DDD9BC392C702E62007DBE29 /* Bundle+displayName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+displayName.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -127,6 +135,10 @@
 		DDD84DC02C61D380002AC267 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DDC4E5AB2C832D6F00D422EB /* StateOfMindValenceClassification.swift */,
+				DDC4E5A92C832D5C00D422EB /* StateOfMindAssociation.swift */,
+				DDC4E5A72C832D4000D422EB /* StateOfMindLabel.swift */,
+				DDC4E5A52C832C6700D422EB /* StateOfMindKind.swift */,
 				DD6CA5762C5F123900435FA2 /* HKStateOfMind+toVendoredStateOfMind.swift */,
 				DD6CA5722C5F120700435FA2 /* StateOfMind.swift */,
 			);
@@ -218,17 +230,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDC4E5AC2C832D6F00D422EB /* StateOfMindValenceClassification.swift in Sources */,
 				DD6CA5732C5F120700435FA2 /* StateOfMind.swift in Sources */,
 				DD3A0E062C816C6700B8DECC /* DeleteStateOfMindSampleIntent.swift in Sources */,
 				DD27B7F02C56017800D66AA8 /* LogStateOfMindSampleIntent.swift in Sources */,
 				DD6CA5772C5F123900435FA2 /* HKStateOfMind+toVendoredStateOfMind.swift in Sources */,
 				DD3A0E042C815D4C00B8DECC /* StateOfMindIntentError.swift in Sources */,
+				DDC4E5A82C832D4000D422EB /* StateOfMindLabel.swift in Sources */,
 				DDC0BBEB2C53726F0050888D /* ContentView.swift in Sources */,
+				DDC4E5AA2C832D5C00D422EB /* StateOfMindAssociation.swift in Sources */,
 				DDC0BBE92C53726F0050888D /* EmocoreApp.swift in Sources */,
 				DDD84DC32C61D7A9002AC267 /* OnboardingView.swift in Sources */,
 				DD3DBD072C57312A00ECB3EE /* healthStore.swift in Sources */,
 				DD6CA5792C5F599F00435FA2 /* StateOfMindQuery.swift in Sources */,
 				DDD9BC3A2C702E6D007DBE29 /* Bundle+displayName.swift in Sources */,
+				DDC4E5A62C832C6700D422EB /* StateOfMindKind.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

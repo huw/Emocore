@@ -6,7 +6,7 @@ enum StateOfMindConversionError: Error {
 
 extension HKStateOfMind {
     func toVendoredStateOfMind() throws -> StateOfMind {
-        guard let kind = StateOfMind.Kind(from: kind) else {
+        guard let kind = StateOfMindKind(from: kind) else {
             throw StateOfMindConversionError.unknown
         }
 
