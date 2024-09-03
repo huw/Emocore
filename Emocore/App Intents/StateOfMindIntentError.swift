@@ -6,6 +6,7 @@ enum StateOfMindIntentError: Swift.Error, CustomLocalizedStringResourceConvertib
     case unavailable
     case unauthorized(HKAuthorizationStatus)
     case notFound
+    case valenceOutOfRange(Double)
 
     var localizedStringResource: LocalizedStringResource {
         switch self {
@@ -24,6 +25,9 @@ enum StateOfMindIntentError: Swift.Error, CustomLocalizedStringResourceConvertib
                 """
             default: "Something went wrong"
             }
+        case let .valenceOutOfRange(valence): """
+            State of Mind valence must be between -1 and 1, but \(valence) is out of that range.
+            """
         }
     }
 }

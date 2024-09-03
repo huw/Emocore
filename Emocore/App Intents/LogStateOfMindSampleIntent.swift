@@ -35,11 +35,10 @@ struct LogStateOfMindSampleIntent: AppIntent {
     @Parameter(
         description: """
         A signed, self-reported measure of how positive or negative one is feeling, \
-        on a continuous scale from -1 to +1.
+        on a continuous scale from -1 to 1.
         """,
         controlStyle: .field,
-        inclusiveRange: (-1.0, 1.0),
-        requestValueDialog: "Choose how you're feeling right now"
+        requestValueDialog: "Choose how you're feeling right now, between -1 to 1"
     )
     var valence: Double
 
@@ -85,6 +84,10 @@ struct LogStateOfMindSampleIntent: AppIntent {
     }
 
     func perform() async throws -> some ReturnsValue<StateOfMind> {
+        guard valence >= -1 && valence <= 1 else {
+            throw Error.valenceOutOfRange(valence)
+        }
+
         // Convert the enums, which should work unless the HealthKit coding changes.
         guard let kind = kind.toHKStateOfMindKind else {
             throw Error.unknown("Couldn't convert intent kind to HealthKit kind")
