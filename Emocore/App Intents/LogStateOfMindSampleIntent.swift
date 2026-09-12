@@ -55,6 +55,30 @@ struct LogStateOfMindSampleIntent: AppIntent {
     var associations: [StateOfMind.Association]?
 
     @Parameter(
+        title: "Label Names",
+        description: """
+        Labels as text, separated by commas — "Happy, Hopeful, Passionate". \
+        Use this when the words are computed while the shortcut runs, since the \
+        Labels picker above can only be set while editing. Anything given here is \
+        added to whatever the picker already holds.
+        """,
+        requestValueDialog: "Which labels, as text?"
+    )
+    var labelNames: String?
+
+    @Parameter(
+        title: "Association Names",
+        description: """
+        Associations as text, separated by commas — "Work, Money, Health". \
+        Use this when the areas are computed while the shortcut runs, since the \
+        Associations picker above can only be set while editing. Anything given here \
+        is added to whatever the picker already holds.
+        """,
+        requestValueDialog: "Which associations, as text?"
+    )
+    var associationNames: String?
+
+    @Parameter(
         title: "Override past daily mood time to 10pm",
         description: """
         Whether to override the time of a past daily mood to 10:00pm. \
@@ -65,18 +89,48 @@ struct LogStateOfMindSampleIntent: AppIntent {
     )
     var shouldOverridePastDailyMoodTime: Bool
 
+    /// Split a comma-separated list into cases, throwing on the first word that is not
+    /// one. Silently dropping an unrecognised word would log a sample that quietly says
+    /// less than the caller asked for, which is worse than failing.
+    private static func parse<T>(
+        names: String?,
+        as make: (String) -> T?,
+        what: String
+    ) throws -> [T] {
+        guard let names, !names.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        else { return [] }
+
+        return try names.split(separator: ",").compactMap { piece in
+            let word = piece.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !word.isEmpty else { return nil }
+            guard let value = make(word) else {
+                throw Error.unknown("\(word) isn't a State of Mind \(what)")
+            }
+            return value
+        }
+    }
+
+    private static func merge<T: Hashable>(_ picked: [T], _ named: [T]) -> [T] {
+        var seen = Set<T>()
+        return (picked + named).filter { seen.insert($0).inserted }
+    }
+
     static var parameterSummary: some ParameterSummary {
         Switch(\.$kind) {
             Case(StateOfMindKind.momentaryEmotion) {
                 Summary("Log \(\.$kind) of valence \(\.$valence) at \(\.$date)") {
                     \.$labels
                     \.$associations
+                    \.$labelNames
+                    \.$associationNames
                 }
             }
             DefaultCase {
                 Summary("Log \(\.$kind) of valence \(\.$valence) at \(\.$date)") {
                     \.$labels
                     \.$associations
+                    \.$labelNames
+                    \.$associationNames
                     \.$shouldOverridePastDailyMoodTime
                 }
             }
@@ -93,16 +147,33 @@ struct LogStateOfMindSampleIntent: AppIntent {
             throw Error.unknown("Couldn't convert intent kind to HealthKit kind")
         }
 
+        // The picker and the text parameter are additive: a shortcut may set some
+        // labels while editing and compute the rest at runtime. Order is preserved and
+        // duplicates are dropped, so passing a word the picker already holds is safe.
+        let namedLabels = try Self.parse(
+            names: labelNames,
+            as: StateOfMind.Label.init(name:),
+            what: "label"
+        )
+        let namedAssociations = try Self.parse(
+            names: associationNames,
+            as: StateOfMind.Association.init(name:),
+            what: "association"
+        )
+
+        let allLabels = Self.merge(self.labels ?? [], namedLabels)
+        let allAssociations = Self.merge(self.associations ?? [], namedAssociations)
+
         // For the lists, start by filtering out anything that doesn't convert, then throw if anything got filtered
-        let labels = (labels ?? []).compactMap { $0.toHKStateOfMindLabel }
-        guard labels.count == (self.labels?.count ?? 0) else {
+        let labels = allLabels.compactMap { $0.toHKStateOfMindLabel }
+        guard labels.count == allLabels.count else {
             throw Error.unknown("Couldn't convert intent labels to HealthKit labels")
         }
 
-        let associations = (associations ?? []).compactMap {
+        let associations = allAssociations.compactMap {
             $0.toHKStateOfMindAssociation
         }
-        guard associations.count == (self.associations?.count ?? 0) else {
+        guard associations.count == allAssociations.count else {
             throw Error.unknown("Couldn't convert intent associations to HealthKit associations")
         }
 
