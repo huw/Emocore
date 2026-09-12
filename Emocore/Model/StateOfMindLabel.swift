@@ -91,4 +91,68 @@ enum StateOfMindLabel: Int, AppEnum {
     var toHKStateOfMindLabel: HKStateOfMind.Label? {
         HKStateOfMind.Label(rawValue: rawValue)
     }
+
+    /// Every case by its display name, lowercased, plus a few spellings people
+    /// actually type. Used by the name-based parameters on the log intent so a
+    /// Shortcut can pass words it computed at runtime.
+    static let byName: [String: Self] = [
+        "amazed": .amazed,
+        "amused": .amused,
+        "angry": .angry,
+        "annoyed": .annoyed,
+        "anxious": .anxious,
+        "ashamed": .ashamed,
+        "brave": .brave,
+        "calm": .calm,
+        "confident": .confident,
+        "content": .content,
+        "disappointed": .disappointed,
+        "discouraged": .discouraged,
+        "disgusted": .disgusted,
+        "drained": .drained,
+        "embarrassed": .embarrassed,
+        "excited": .excited,
+        "frustrated": .frustrated,
+        "grateful": .grateful,
+        "guilty": .guilty,
+        "happy": .happy,
+        "hopeful": .hopeful,
+        "hopeless": .hopeless,
+        "indifferent": .indifferent,
+        "irritated": .irritated,
+        "jealous": .jealous,
+        "joyful": .joyful,
+        "lonely": .lonely,
+        "overwhelmed": .overwhelmed,
+        "passionate": .passionate,
+        "peaceful": .peaceful,
+        "proud": .proud,
+        "relieved": .relieved,
+        "sad": .sad,
+        "satisfied": .satisfied,
+        "scared": .scared,
+        "stressed": .stressed,
+        "surprised": .surprised,
+        "worried": .worried
+    ]
+
+    init?(name: String) {
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        // Health renders "Self-Care" and "Current Events"; callers type all sorts of
+        // things. Match the display name first, then again with separators normalised,
+        // so "self care", "self-care" and "selfCare" all land on the same case.
+        if let hit = Self.byName[trimmed] {
+            self = hit
+            return
+        }
+        let normalised = trimmed
+            .replacingOccurrences(of: "_", with: " ")
+            .replacingOccurrences(of: "-", with: " ")
+        for (key, value) in Self.byName
+        where key.replacingOccurrences(of: "-", with: " ") == normalised {
+            self = value
+            return
+        }
+        return nil
+    }
 }

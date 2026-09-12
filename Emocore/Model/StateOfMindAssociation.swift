@@ -51,4 +51,48 @@ enum StateOfMindAssociation: Int, AppEnum {
     var toHKStateOfMindAssociation: HKStateOfMind.Association? {
         HKStateOfMind.Association(rawValue: rawValue)
     }
+
+    /// Every case by its display name, lowercased, plus a few spellings people
+    /// actually type. Used by the name-based parameters on the log intent so a
+    /// Shortcut can pass words it computed at runtime.
+    static let byName: [String: Self] = [
+        "community": .community,
+        "current events": .currentEvents,
+        "dating": .dating,
+        "education": .education,
+        "family": .family,
+        "fitness": .fitness,
+        "friends": .friends,
+        "health": .health,
+        "hobbies": .hobbies,
+        "identity": .identity,
+        "money": .money,
+        "partner": .partner,
+        "self-care": .selfCare,
+        "spirituality": .spirituality,
+        "tasks": .tasks,
+        "travel": .travel,
+        "work": .work,
+        "weather": .weather
+    ]
+
+    init?(name: String) {
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        // Health renders "Self-Care" and "Current Events"; callers type all sorts of
+        // things. Match the display name first, then again with separators normalised,
+        // so "self care", "self-care" and "selfCare" all land on the same case.
+        if let hit = Self.byName[trimmed] {
+            self = hit
+            return
+        }
+        let normalised = trimmed
+            .replacingOccurrences(of: "_", with: " ")
+            .replacingOccurrences(of: "-", with: " ")
+        for (key, value) in Self.byName
+        where key.replacingOccurrences(of: "-", with: " ") == normalised {
+            self = value
+            return
+        }
+        return nil
+    }
 }
