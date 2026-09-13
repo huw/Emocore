@@ -44,7 +44,8 @@ struct LogStateOfMindSampleIntent: AppIntent {
 
     @Parameter(
         description: "A specific word describing a felt experience.",
-        requestValueDialog: "What best describes this feeling?"
+        requestValueDialog: "What best describes this feeling?",
+        optionsProvider: StateOfMindLabelOptions()
     )
     var labels: [StateOfMind.Label]?
 
